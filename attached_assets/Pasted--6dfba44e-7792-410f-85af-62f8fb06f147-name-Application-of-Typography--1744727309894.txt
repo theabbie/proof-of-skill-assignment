@@ -1,0 +1,70 @@
+{
+    "6dfba44e-7792-410f-85af-62f8fb06f147": {
+        "name": "Application of Typography",
+        "score": 0
+    },
+    "0152520b-829c-42ec-82a6-161d5b0afb4b": {
+        "name": "Applying Color Theory",
+        "score": 2
+    },
+    "fc2be13d-025b-4089-a9c5-99c0f3aa7f84": {
+        "name": "Creation of Brands",
+        "score": 4
+    },
+    "3741bc88-160f-45f4-9f4f-ca90a60b057e": {
+        "name": "Creating User Personas",
+        "score": 2
+    },
+    "b3edaa16-62c0-4f83-8fd3-2c90430c0e48": {
+        "name": "Creating Effective Icons",
+        "score": 3
+    },
+    "b01b2fc6-83f6-4f08-8ef5-372e0d41e337": {
+        "name": "Conducting Usability Tests",
+        "score": 4
+    },
+    "8758e121-5889-4096-9380-bbb42a4fc136": {
+        "name": "Gathering User Feedback",
+        "score": 3
+    },
+    "291e67a8-0d00-420c-8220-b21a1e6e0480": {
+        "name": "Creating Effective Surveys",
+        "score": 0
+    },
+    "9bf791b0-867d-4c5d-9c05-fc96b8b4cb0a": {
+        "name": "Crafting Effective Questions",
+        "score": 3
+    },
+    "57f0771d-e156-4587-b81c-03df87fd1946": {
+        "name": "Conducting Market Research",
+        "score": 3
+    },
+    "fa4118be-3ca7-40f5-ab7a-a89faa9f411b": {
+        "name": "Using Figma for Design",
+        "score": 3
+    },
+    "c46d8541-d88f-4523-bf4c-de6f9b92e0e7": {
+        "name": "Designing Responsive Interactions",
+        "score": 1
+    },
+    "c537c160-e2a9-4750-92cc-85afc879a5ac": {
+        "name": "Designing Functional Micro-Interactions",
+        "score": 2
+    },
+    "3779f5c9-0e97-4c9b-ae05-38752adc1f6a": {
+        "name": "Designing User Flows",
+        "score": 3
+    },
+    "b1e77815-20b8-46f7-9e78-6228c17c25b8": {
+        "name": "Creating Sitemaps",
+        "score": 3
+    },
+    "3c8d7714-5701-4ec6-a5c7-1bc200b6ac02": {
+        "name": "Creating Basic Prototypes",
+        "score": 3
+    },
+    "0ff79374-4b9a-4088-a8cf-9df477a7b990": {
+        "name": "Creating Wireframes",
+        "score": 2
+    }
+}
