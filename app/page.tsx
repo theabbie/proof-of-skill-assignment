@@ -1,8 +1,7 @@
+"use client";
 
-export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-center">
-      <h1 className="text-4xl font-bold">Welcome to Next.js</h1>
-    </main>
-  );
+import CandidateComparison from "../candidate-comparison";
+
+export default function SyntheticV0PageForDeployment() {
+  return <CandidateComparison />;
 }
