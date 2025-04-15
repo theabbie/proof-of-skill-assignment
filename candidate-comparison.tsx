@@ -12,7 +12,9 @@ interface CandidateComparisonProps {
   candidates: Candidate[];
 }
 
-export default function CandidateComparison({ candidates }: CandidateComparisonProps) {
+export default function CandidateComparison({
+  candidates,
+}: CandidateComparisonProps) {
   const [activeTab, setActiveTab] = useState("compare");
 
   const getSkillColor = (level: number) => {
@@ -171,7 +173,9 @@ export default function CandidateComparison({ candidates }: CandidateComparisonP
                       {skill}
                     </td>
                     {candidates.map((candidate) => {
-                      const skillLevel = candidate.skills ? candidate.skills[skillIndex -3] || 0 : 0; //Handle potential undefined skills array
+                      const skillLevel = candidate.skills
+                        ? candidate.skills[skillIndex - 3] || 0
+                        : 0; //Handle potential undefined skills array
                       return (
                         <td key={candidate.id} className="p-0">
                           <div
