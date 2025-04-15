@@ -19,50 +19,42 @@ export default function CandidateComparison({
   const [activeTab, setActiveTab] = useState("compare");
   const [activeCandidates, setActiveCandidates] = useState<Set<string>>(new Set());
 
+  const [candidateSkills, setCandidateSkills] = useState<Record<string, Record<string, { name: string; score: number }>>>({});
+
   const getSkillColor = (level: number) => {
-    if (level >= 4) return "bg-green-500";
-    if (level >= 3) return "bg-green-300";
-    if (level >= 2) return "bg-yellow-200";
-    return "bg-yellow-100";
+    switch(level) {
+      case 4: return "bg-green-600";
+      case 3: return "bg-green-400";
+      case 2: return "bg-yellow-400";
+      case 1: return "bg-yellow-200";
+      default: return "bg-gray-200";
+    }
   };
 
   const toggleCandidate = async (id: string) => {
     const newActiveCandidates = new Set(activeCandidates);
     if (newActiveCandidates.has(id)) {
       newActiveCandidates.delete(id);
+      const newSkills = { ...candidateSkills };
+      delete newSkills[id];
+      setCandidateSkills(newSkills);
     } else {
       newActiveCandidates.add(id);
       const skills = await fetchCandidateSkills(id);
-      console.log('Candidate skills:', id, skills);
+      setCandidateSkills(prev => ({ ...prev, [id]: skills }));
     }
     setActiveCandidates(newActiveCandidates);
   };
 
-  const skills = [
-    "Experience",
-    "Can join in",
-    "Minimum salary expected",
-    "Creating Wireframes",
-    "Creating Basic Prototypes",
-    "Creation of Brands",
-    "Applying Color Theory",
-    "Using Figma for Design",
-    "Application of Typography",
-    "Creating Effective Icons",
-    "Optimizing Touch Points",
-    "Addressing User Pain Points",
-    "Conducting User Research",
-    "Applying Questioning Skills",
-    "Conducting Heuristic Evaluation",
-    "Gathering User Feedback",
-    "Conducting Usability Tests",
-    "Creating User Personas",
-    "Conducting Market Research",
-    "Crafting Effective Questions",
-    "Creating Effective Surveys",
-    "Creating Sitemaps",
-    "Designing User Flows",
-  ];
+  const getAllSkills = () => {
+    const skillMap = new Map<string, string>();
+    Object.values(candidateSkills).forEach(candidateSkillset => {
+      Object.entries(candidateSkillset).forEach(([id, skill]) => {
+        skillMap.set(id, skill.name);
+      });
+    });
+    return Array.from(skillMap.entries()).map(([id, name]) => ({ id, name }));
+  };
 
   const activeCandidatesList = candidates.filter(c => activeCandidates.has(c.id));
 
@@ -181,22 +173,20 @@ export default function CandidateComparison({
                 </tr>
               </thead>
               <tbody>
-                {skills.map((skill, skillIndex) => (
+                {getAllSkills().map((skill, skillIndex) => (
                   <tr
-                    key={skillIndex}
+                    key={skill.id}
                     className={skillIndex % 2 === 0 ? "bg-gray-50" : "bg-white"}
                   >
                     <td className="p-2 text-sm sticky left-0 bg-inherit z-10 border-r">
-                      {skill}
+                      {skill.name}
                     </td>
                     {activeCandidatesList.map((candidate) => {
-                      const skillLevel = candidate.skills
-                        ? candidate.skills[skillIndex - 3] || 0
-                        : 0;
+                      const skillScore = candidateSkills[candidate.id]?.[skill.id]?.score ?? 0;
                       return (
                         <td key={candidate.id} className="p-0">
                           <div
-                            className={`w-[50px] h-[50px] ${getSkillColor(skillLevel)}`}
+                            className={`w-[50px] h-[50px] ${getSkillColor(skillScore)}`}
                           ></div>
                         </td>
                       );
