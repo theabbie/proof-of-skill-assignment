@@ -1,22 +1,13 @@
 
-'use client';
+'use client'
 
-import { useEffect, useState } from 'react';
+import { Button } from "@/components/ui/button"
 
 export default function Home() {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return null;
-  }
-
   return (
-    <main>
-      <h1>Welcome to Next.js</h1>
+    <main className="flex min-h-screen flex-col items-center justify-center p-24">
+      <h1 className="text-4xl font-bold mb-4">Welcome to Next.js</h1>
+      <Button>Click me</Button>
     </main>
-  );
+  )
 }
