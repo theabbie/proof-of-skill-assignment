@@ -5,8 +5,14 @@ import { ChevronLeft, ChevronRight, Info } from "lucide-react";
 import Link from "next/link";
 import { Avatar } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import { type Candidate } from "@/hooks/useCandidateList";
 
-export default function CandidateComparison() {
+interface CandidateComparisonProps {
+  candidates: Candidate[];
+}
+
+export default function CandidateComparison({ candidates }: CandidateComparisonProps) {
   const [activeTab, setActiveTab] = useState("compare");
 
   const getSkillColor = (level: number) => {
@@ -42,129 +48,6 @@ export default function CandidateComparison() {
     "Designing User Flows",
   ];
 
-  const candidates = [
-    {
-      id: 1,
-      score: 3.5,
-      joinIn: 6,
-      salary: 12,
-      skills: [3, 4, 3, 2, 4, 3, 2, 3, 4, 2, 1, 4, 3, 2, 3, 4, 3, 2, 4, 3, 2],
-    },
-    {
-      id: 2,
-      score: 15,
-      joinIn: 5,
-      salary: 8,
-      skills: [2, 3, 4, 3, 2, 4, 3, 2, 1, 3, 4, 2, 3, 4, 2, 3, 4, 3, 2, 3, 4],
-    },
-    {
-      id: 3,
-      score: 50,
-      joinIn: 3,
-      salary: 7,
-      skills: [4, 2, 3, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2],
-    },
-    {
-      id: 4,
-      score: 4,
-      joinIn: 2,
-      salary: 3,
-      skills: [3, 4, 2, 3, 4, 2, 3, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3],
-    },
-    {
-      id: 5,
-      score: 7,
-      joinIn: 15,
-      salary: 50,
-      skills: [2, 3, 4, 2, 3, 4, 2, 3, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4],
-    },
-    {
-      id: 6,
-      score: 9,
-      joinIn: 7,
-      salary: 9,
-      skills: [4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2],
-    },
-    {
-      id: 7,
-      score: 0,
-      joinIn: 10,
-      salary: 15,
-      skills: [3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4],
-    },
-    {
-      id: 8,
-      score: 0,
-      joinIn: 4,
-      salary: 8,
-      skills: [2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3],
-    },
-    {
-      id: 9,
-      score: 1,
-      joinIn: 8,
-      salary: 12,
-      skills: [4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2],
-    },
-    {
-      id: 10,
-      score: 5.8,
-      joinIn: 8,
-      salary: 14,
-      skills: [3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4],
-    },
-    {
-      id: 11,
-      score: 2,
-      joinIn: 6,
-      salary: 6,
-      skills: [2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3],
-    },
-    {
-      id: 12,
-      score: 3,
-      joinIn: 0,
-      salary: 0,
-      skills: [4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2],
-    },
-    {
-      id: 13,
-      score: 3,
-      joinIn: 12,
-      salary: 15,
-      skills: [3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4],
-    },
-    {
-      id: 14,
-      score: 5,
-      joinIn: 15,
-      salary: 17,
-      skills: [2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3],
-    },
-    {
-      id: 15,
-      score: 6,
-      joinIn: 20,
-      salary: 25,
-      skills: [4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2],
-    },
-    {
-      id: 16,
-      score: 0,
-      joinIn: 89,
-      salary: 100,
-      skills: [3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4],
-    },
-  ];
-
-  const recommendedCandidates = [
-    { id: 1, name: "Abhishek trivedi" },
-    { id: 2, name: "Abhishek trivedi" },
-    { id: 3, name: "Abhishek trivedi" },
-    { id: 4, name: "Abhishek trivedi" },
-    { id: 5, name: "Abhishek trivedi" },
-  ];
-
   return (
     <div className="flex flex-col min-h-screen bg-white">
       <div className="border-b">
@@ -184,7 +67,7 @@ export default function CandidateComparison() {
           <h1 className="text-2xl text-gray-500 font-normal">
             Posk_UXdesigner_sr001
           </h1>
-          <div className="text-gray-500">23 Candidates</div>
+          <div className="text-gray-500">{candidates.length} Candidates</div>
         </div>
       </div>
 
@@ -194,7 +77,7 @@ export default function CandidateComparison() {
             <h2 className="font-medium">Most recommended</h2>
           </div>
           <div className="border-t border-gray-100">
-            {recommendedCandidates.map((candidate) => (
+            {candidates.map((candidate) => (
               <div
                 key={candidate.id}
                 className="flex items-center p-4 border-b border-gray-100 hover:bg-gray-50"
@@ -273,7 +156,7 @@ export default function CandidateComparison() {
                       key={candidate.id}
                       className="text-center p-2 text-xs font-normal"
                     >
-                      {candidate.id}
+                      {candidate.name}
                     </th>
                   ))}
                 </tr>
@@ -287,28 +170,10 @@ export default function CandidateComparison() {
                     <td className="p-2 text-sm sticky left-0 bg-inherit z-10 border-r">
                       {skill}
                     </td>
-                    {candidates.map((candidate, candidateIndex) => {
-                      // For the first three rows (Experience, Can join in, Minimum salary expected)
-                      if (skillIndex < 3) {
-                        const value =
-                          skillIndex === 0
-                            ? candidate.score
-                            : skillIndex === 1
-                              ? candidate.joinIn
-                              : candidate.salary;
-                        return (
-                          <td
-                            key={candidateIndex}
-                            className="text-center p-2 text-sm"
-                          >
-                            {value}
-                          </td>
-                        );
-                      }
-
-                      const skillLevel = candidate.skills[skillIndex - 3] || 0;
+                    {candidates.map((candidate) => {
+                      const skillLevel = candidate.skills ? candidate.skills[skillIndex -3] || 0 : 0; //Handle potential undefined skills array
                       return (
-                        <td key={candidateIndex} className="p-0">
+                        <td key={candidate.id} className="p-0">
                           <div
                             className={`w-full h-8 ${getSkillColor(skillLevel)}`}
                           ></div>
