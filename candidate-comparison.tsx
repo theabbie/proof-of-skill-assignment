@@ -1,12 +1,13 @@
+
 "use client";
 
 import { useState } from "react";
-import { ChevronLeft, ChevronRight, Info } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { Avatar } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
 import { type Candidate } from "@/hooks/useCandidateList";
+import { fetchCandidateSkills } from "@/hooks/useCandidateSkills";
 
 interface CandidateComparisonProps {
   candidates: Candidate[];
@@ -16,12 +17,25 @@ export default function CandidateComparison({
   candidates,
 }: CandidateComparisonProps) {
   const [activeTab, setActiveTab] = useState("compare");
+  const [activeCandidates, setActiveCandidates] = useState<Set<string>>(new Set());
 
   const getSkillColor = (level: number) => {
     if (level >= 4) return "bg-green-500";
     if (level >= 3) return "bg-green-300";
     if (level >= 2) return "bg-yellow-200";
     return "bg-yellow-100";
+  };
+
+  const toggleCandidate = async (id: string) => {
+    const newActiveCandidates = new Set(activeCandidates);
+    if (newActiveCandidates.has(id)) {
+      newActiveCandidates.delete(id);
+    } else {
+      newActiveCandidates.add(id);
+      const skills = await fetchCandidateSkills(id);
+      console.log('Candidate skills:', id, skills);
+    }
+    setActiveCandidates(newActiveCandidates);
   };
 
   const skills = [
@@ -49,6 +63,8 @@ export default function CandidateComparison({
     "Creating Sitemaps",
     "Designing User Flows",
   ];
+
+  const activeCandidatesList = candidates.filter(c => activeCandidates.has(c.id));
 
   return (
     <div className="flex flex-col min-h-screen bg-white">
@@ -90,8 +106,9 @@ export default function CandidateComparison({
                   variant="outline"
                   size="icon"
                   className="ml-auto h-6 w-6 rounded-full"
+                  onClick={() => toggleCandidate(candidate.id)}
                 >
-                  +
+                  {activeCandidates.has(candidate.id) ? "-" : "+"}
                 </Button>
               </div>
             ))}
@@ -153,7 +170,7 @@ export default function CandidateComparison({
               <thead>
                 <tr>
                   <th className="w-[250px] sticky left-0 bg-white z-10"></th>
-                  {candidates.map((candidate) => (
+                  {activeCandidatesList.map((candidate) => (
                     <th
                       key={candidate.id}
                       className="text-center p-2 text-xs font-normal"
@@ -172,10 +189,10 @@ export default function CandidateComparison({
                     <td className="p-2 text-sm sticky left-0 bg-inherit z-10 border-r">
                       {skill}
                     </td>
-                    {candidates.map((candidate) => {
+                    {activeCandidatesList.map((candidate) => {
                       const skillLevel = candidate.skills
                         ? candidate.skills[skillIndex - 3] || 0
-                        : 0; //Handle potential undefined skills array
+                        : 0;
                       return (
                         <td key={candidate.id} className="p-0">
                           <div
