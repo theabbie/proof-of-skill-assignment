@@ -166,14 +166,14 @@ export default function CandidateComparison({
           </div>
 
           <div className="overflow-x-auto">
-            <table className="w-full">
+            <table className="table-fixed">
               <thead>
                 <tr>
                   <th className="w-[250px] sticky left-0 bg-white z-10"></th>
                   {activeCandidatesList.map((candidate) => (
                     <th
                       key={candidate.id}
-                      className="text-center p-2 text-xs font-normal"
+                      className="w-[100px] text-left p-2 text-xs font-normal"
                     >
                       {candidate.name}
                     </th>
@@ -196,7 +196,7 @@ export default function CandidateComparison({
                       return (
                         <td key={candidate.id} className="p-0">
                           <div
-                            className={`w-full h-8 ${getSkillColor(skillLevel)}`}
+                            className={`w-[100px] h-[100px] ${getSkillColor(skillLevel)}`}
                           ></div>
                         </td>
                       );
