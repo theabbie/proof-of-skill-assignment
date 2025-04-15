@@ -23,11 +23,11 @@ export default function CandidateComparison({
 
   const getSkillColor = (level: number) => {
     switch(level) {
-      case 4: return "bg-green-600";
-      case 3: return "bg-green-400";
-      case 2: return "bg-yellow-400";
-      case 1: return "bg-yellow-200";
-      default: return "bg-gray-200";
+      case 4: return "bg-[#003f0b]";
+      case 3: return "bg-[#1a9641]";
+      case 2: return "bg-[#a6d96a]";
+      case 1: return "bg-[#f8f8a7]";
+      default: return "bg-[#ecfff1]";
     }
   };
 
