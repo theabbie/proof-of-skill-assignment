@@ -175,10 +175,10 @@ export default function CandidateComparison({
                   {activeCandidatesList.map((candidate) => (
                     <th key={candidate.id} className="w-[55px] p-1">
                       <div
-                        className="text-xs font-normal truncate"
+                        className="text-xs font-normal text-center"
                         title={candidate.name}
                       >
-                        {candidate.name}
+                        {candidate.name.split(' ').map(word => word[0]).join('')}
                       </div>
                     </th>
                   ))}
