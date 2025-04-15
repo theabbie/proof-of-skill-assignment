@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -17,17 +16,26 @@ export default function CandidateComparison({
   candidates,
 }: CandidateComparisonProps) {
   const [activeTab, setActiveTab] = useState("compare");
-  const [activeCandidates, setActiveCandidates] = useState<Set<string>>(new Set());
+  const [activeCandidates, setActiveCandidates] = useState<Set<string>>(
+    new Set(),
+  );
 
-  const [candidateSkills, setCandidateSkills] = useState<Record<string, Record<string, { name: string; score: number }>>>({});
+  const [candidateSkills, setCandidateSkills] = useState<
+    Record<string, Record<string, { name: string; score: number }>>
+  >({});
 
   const getSkillColor = (level: number) => {
-    switch(level) {
-      case 4: return "bg-[#003f0b]";
-      case 3: return "bg-[#1a9641]";
-      case 2: return "bg-[#a6d96a]";
-      case 1: return "bg-[#f8f8a7]";
-      default: return "bg-[#ecfff1]";
+    switch (level) {
+      case 4:
+        return "bg-[#003f0b]";
+      case 3:
+        return "bg-[#1a9641]";
+      case 2:
+        return "bg-[#a6d96a]";
+      case 1:
+        return "bg-[#f8f8a7]";
+      default:
+        return "bg-[#ecfff1]";
     }
   };
 
@@ -41,14 +49,14 @@ export default function CandidateComparison({
     } else {
       newActiveCandidates.add(id);
       const skills = await fetchCandidateSkills(id);
-      setCandidateSkills(prev => ({ ...prev, [id]: skills }));
+      setCandidateSkills((prev) => ({ ...prev, [id]: skills }));
     }
     setActiveCandidates(newActiveCandidates);
   };
 
   const getAllSkills = () => {
     const skillMap = new Map<string, string>();
-    Object.values(candidateSkills).forEach(candidateSkillset => {
+    Object.values(candidateSkills).forEach((candidateSkillset) => {
       Object.entries(candidateSkillset).forEach(([id, skill]) => {
         skillMap.set(id, skill.name);
       });
@@ -56,7 +64,9 @@ export default function CandidateComparison({
     return Array.from(skillMap.entries()).map(([id, name]) => ({ id, name }));
   };
 
-  const activeCandidatesList = candidates.filter(c => activeCandidates.has(c.id));
+  const activeCandidatesList = candidates.filter((c) =>
+    activeCandidates.has(c.id),
+  );
 
   return (
     <div className="flex flex-col min-h-screen bg-white">
@@ -163,11 +173,11 @@ export default function CandidateComparison({
                 <tr>
                   <th className="w-[250px] sticky left-0 bg-white z-10"></th>
                   {activeCandidatesList.map((candidate) => (
-                    <th
-                      key={candidate.id}
-                      className="w-[55px] p-1"
-                    >
-                      <div className="text-xs font-normal truncate" title={candidate.name}>
+                    <th key={candidate.id} className="w-[55px] p-1">
+                      <div
+                        className="text-xs font-normal truncate"
+                        title={candidate.name}
+                      >
                         {candidate.name}
                       </div>
                     </th>
@@ -184,7 +194,8 @@ export default function CandidateComparison({
                       {skill.name}
                     </td>
                     {activeCandidatesList.map((candidate) => {
-                      const skillScore = candidateSkills[candidate.id]?.[skill.id]?.score ?? 0;
+                      const skillScore =
+                        candidateSkills[candidate.id]?.[skill.id]?.score ?? 0;
                       return (
                         <td key={candidate.id} className="p-1">
                           <div
