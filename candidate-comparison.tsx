@@ -199,16 +199,14 @@ export default function CandidateComparison() {
                 key={candidate.id}
                 className="flex items-center p-4 border-b border-gray-100 hover:bg-gray-50"
               >
-                <Avatar className="h-8 w-8 bg-gray-200 text-gray-600 mr-3">
-                  <div className="text-xs">AT</div>
-                </Avatar>
+                <Avatar className="h-8 w-8 bg-gray-200 text-gray-600 mr-3"></Avatar>
                 <div className="text-sm">{candidate.name}</div>
                 <Button
-                  variant="ghost"
+                  variant="outline"
                   size="icon"
                   className="ml-auto h-6 w-6 rounded-full"
                 >
-                  <Info className="h-4 w-4 text-gray-400" />
+                  +
                 </Button>
               </div>
             ))}
