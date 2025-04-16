@@ -72,15 +72,16 @@ export default function CandidateComparison({
   };
 
   const [selectedSkills, setSelectedSkills] = useState<Set<string>>(new Set());
-  
+
   const allSkills = getAllSkills();
   const activeCandidatesList = candidates.filter((c) =>
     activeCandidates.has(c.id),
   );
 
-  const filteredSkills = selectedSkills.size === 0 
-    ? allSkills 
-    : allSkills.filter(skill => selectedSkills.has(skill.id));
+  const filteredSkills =
+    selectedSkills.size === 0
+      ? allSkills
+      : allSkills.filter((skill) => selectedSkills.has(skill.id));
 
   return (
     <div className="flex flex-col min-h-screen bg-white">
@@ -186,19 +187,50 @@ export default function CandidateComparison({
               <thead>
                 <tr>
                   <th className="w-[250px] sticky left-0 bg-white z-10 p-2">
-                    <Select onValueChange={(value) => setSelectedSkills(new Set([...selectedSkills, value]))} value="">
+                    <Select
+                      onValueChange={(value) => {
+                        setSelectedSkills((prev) => {
+                          const newSet = new Set(prev);
+                          if (newSet.has(value)) {
+                            newSet.delete(value);
+                          } else {
+                            newSet.add(value);
+                          }
+                          return newSet;
+                        });
+                      }}
+                      value=""
+                    >
                       <SelectTrigger className="w-full bg-gray-100 border-none">
                         <div className="flex items-center gap-2">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500">
-                            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className="text-gray-500"
+                          >
+                            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
                           </svg>
                           <SelectValue placeholder="Filter skills..." />
                         </div>
                       </SelectTrigger>
                       <SelectContent>
-                        {allSkills.map(skill => (
+                        {allSkills.map((skill) => (
                           <SelectItem key={skill.id} value={skill.id}>
-                            {skill.name}
+                            <div className="flex items-center gap-2">
+                              <input
+                                type="checkbox"
+                                checked={selectedSkills.has(skill.id)}
+                                readOnly
+                              />
+                              {skill.name}
+                            </div>
                           </SelectItem>
                         ))}
                       </SelectContent>
@@ -210,7 +242,10 @@ export default function CandidateComparison({
                         className="text-xs font-normal text-center"
                         title={candidate.name}
                       >
-                        {candidate.name.split(' ').map(word => word[0]).join('')}
+                        {candidate.name
+                          .split(" ")
+                          .map((word) => word[0])
+                          .join("")}
                       </div>
                     </th>
                   ))}
