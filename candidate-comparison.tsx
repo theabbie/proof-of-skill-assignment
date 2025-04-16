@@ -5,6 +5,13 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { Avatar } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { type Candidate } from "@/hooks/useCandidateList";
 import { fetchCandidateSkills } from "@/hooks/useCandidateSkills";
 
@@ -179,26 +186,23 @@ export default function CandidateComparison({
               <thead>
                 <tr>
                   <th className="w-[250px] sticky left-0 bg-white z-10 p-2">
-                    <div className="flex items-center gap-2 bg-gray-100 p-2 rounded-md">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500">
-                        <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
-                      </svg>
-                      <select
-                        multiple
-                        className="w-full bg-transparent border-none focus:outline-none text-sm"
-                        value={Array.from(selectedSkills)}
-                        onChange={(e) => {
-                          const selected = Array.from(e.target.selectedOptions).map(opt => opt.value);
-                          setSelectedSkills(new Set(selected));
-                        }}
-                      >
+                    <Select onValueChange={(value) => setSelectedSkills(new Set([...selectedSkills, value]))} value="">
+                      <SelectTrigger className="w-full bg-gray-100 border-none">
+                        <div className="flex items-center gap-2">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500">
+                            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+                          </svg>
+                          <SelectValue placeholder="Filter skills..." />
+                        </div>
+                      </SelectTrigger>
+                      <SelectContent>
                         {allSkills.map(skill => (
-                          <option key={skill.id} value={skill.id}>
+                          <SelectItem key={skill.id} value={skill.id}>
                             {skill.name}
-                          </option>
+                          </SelectItem>
                         ))}
-                      </select>
-                    </div>
+                      </SelectContent>
+                    </Select>
                   </th>
                   {activeCandidatesList.map((candidate) => (
                     <th key={candidate.id} className="w-[55px] p-1">
