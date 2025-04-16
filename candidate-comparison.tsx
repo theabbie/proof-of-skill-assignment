@@ -64,9 +64,16 @@ export default function CandidateComparison({
     return Array.from(skillMap.entries()).map(([id, name]) => ({ id, name }));
   };
 
+  const [selectedSkills, setSelectedSkills] = useState<Set<string>>(new Set());
+  
+  const allSkills = getAllSkills();
   const activeCandidatesList = candidates.filter((c) =>
     activeCandidates.has(c.id),
   );
+
+  const filteredSkills = selectedSkills.size === 0 
+    ? allSkills 
+    : allSkills.filter(skill => selectedSkills.has(skill.id));
 
   return (
     <div className="flex flex-col min-h-screen bg-white">
@@ -171,7 +178,28 @@ export default function CandidateComparison({
             <table className="table-fixed">
               <thead>
                 <tr>
-                  <th className="w-[250px] sticky left-0 bg-white z-10"></th>
+                  <th className="w-[250px] sticky left-0 bg-white z-10 p-2">
+                    <div className="flex items-center gap-2 bg-gray-100 p-2 rounded-md">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500">
+                        <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+                      </svg>
+                      <select
+                        multiple
+                        className="w-full bg-transparent border-none focus:outline-none text-sm"
+                        value={Array.from(selectedSkills)}
+                        onChange={(e) => {
+                          const selected = Array.from(e.target.selectedOptions).map(opt => opt.value);
+                          setSelectedSkills(new Set(selected));
+                        }}
+                      >
+                        {allSkills.map(skill => (
+                          <option key={skill.id} value={skill.id}>
+                            {skill.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </th>
                   {activeCandidatesList.map((candidate) => (
                     <th key={candidate.id} className="w-[55px] p-1">
                       <div
@@ -185,7 +213,7 @@ export default function CandidateComparison({
                 </tr>
               </thead>
               <tbody>
-                {getAllSkills().map((skill, skillIndex) => (
+                {filteredSkills.map((skill, skillIndex) => (
                   <tr
                     key={skill.id}
                     className={skillIndex % 2 === 0 ? "bg-gray-50" : "bg-white"}
